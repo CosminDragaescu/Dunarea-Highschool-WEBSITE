@@ -1,6 +1,6 @@
 # Site-ul Liceului Teoretic „Dunărea” Galați
 
-Șablon minimalist de site de prezentare, construit de la zero cu **HTML + CSS + JavaScript pur** (fără framework-uri, fără build tools). Conținutul și pozele au fost preluate de pe site-ul actual ([dunarea-info.ro](http://www.dunarea-info.ro)), iar structura e inspirată de [cnva.eu](https://cnva.eu/).
+Site de prezentare al liceului, cu design minimalist și modern, construit de la zero în **HTML, CSS și JavaScript** — fără framework-uri și fără build tools. Rapid, responsive și ușor de întreținut.
 
 ## Cum îl deschideți
 
@@ -23,8 +23,7 @@ assets/img/     → pozele preluate de pe site-ul vechi
 
 ## Cum modificați designul
 
-Designul urmează sistemul „Dunărea Scholar" (generat cu Stitch — vezi DESIGN.md de pe Desktop):
-minimalism modern + glassmorphism, font Inter, iconițe Material Symbols.
+Stil minimalist modern cu accente de glassmorphism, font Inter și iconițe Material Symbols.
 
 Toate culorile sunt definite o singură dată, la începutul lui `css/style.css`, în blocul `:root`:
 
