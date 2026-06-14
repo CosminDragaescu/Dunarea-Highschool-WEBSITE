@@ -1,0 +1,739 @@
+/* ============================================================
+   Liceul Teoretic „Dunărea" Galați — stylesheet principal
+   Design system „Dunărea Scholar": minimalism modern + glassmorphism
+   Paletă inspirată de adâncimile Dunării (DESIGN.md)
+   ============================================================ */
+
+:root {
+  /* culori */
+  --primar: #00253e;            /* navy adânc — branding, titluri */
+  --primar-container: #0d3b5c;
+  --secundar: #09639a;          /* albastru secundar — linkuri, butoane */
+  --accent: #46ace0;            /* albastru accent — hover, evidențieri */
+  --albastru-pal: #80c1fe;
+  --albastru-foarte-pal: #c5e7ff;
+  --fundal: #f7f9fb;
+  --suprafata: #ffffff;
+  --suprafata-joasa: #f2f4f6;
+  --suprafata-container: #eceef0;
+  --text: #191c1e;
+  --text-secundar: #42474e;
+  --bordura: rgba(194, 199, 207, 0.45);
+
+  /* umbre ambientale cu tentă navy */
+  --umbra: 0px 10px 30px rgba(13, 59, 92, 0.05);
+  --umbra-hover: 0px 20px 40px rgba(13, 59, 92, 0.1);
+
+  --latime-max: 1280px;
+  --raza: 12px;
+  --raza-mare: 24px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  color: var(--text);
+  background: var(--fundal);
+  line-height: 1.5;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: var(--secundar); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.container {
+  max-width: var(--latime-max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   Navigație — pastilă plutitoare cu efect de sticlă
+   ============================================================ */
+.nav {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: var(--latime-max);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 28px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: var(--umbra);
+  transition: padding 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+/* la scroll, bara se micșorează ușor și devine mai opacă (vezi main.js) */
+.nav.scrolled {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--umbra-hover);
+}
+
+.nav-logo {
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--primar);
+  white-space: nowrap;
+}
+.nav-logo:hover { text-decoration: none; }
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  gap: 22px;
+}
+.nav-links a {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text-secundar);
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.nav-links a:hover {
+  color: var(--primar);
+  transform: scale(1.05);
+  text-decoration: none;
+}
+.nav-links a.activ {
+  color: var(--secundar);
+  font-weight: 700;
+  border-bottom-color: var(--secundar);
+}
+
+.nav-cta {
+  background: var(--primar);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 22px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+}
+.nav-cta:hover { background: var(--secundar); text-decoration: none; color: #fff; }
+
+.nav-burger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  color: var(--primar);
+}
+.nav-burger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--primar);
+  margin: 5px 0;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   Animații (intrare hero + reveal la scroll)
+   ============================================================ */
+@keyframes kenBurns {
+  0%   { transform: scale(1); }
+  100% { transform: scale(1.06); }
+}
+
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.stagger-item.activ {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+.scroll-reveal.vizibil {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   Hero (pagina principală)
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+  color: #fff;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url("../assets/img/liceu-2.jpg") center / cover no-repeat;
+  animation: kenBurns 20s ease-out infinite alternate;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+    rgba(0, 37, 62, 0.95) 0%,
+    rgba(0, 37, 62, 0.70) 45%,
+    rgba(0, 37, 62, 0.40) 100%);
+}
+.hero-continut {
+  position: relative;
+  z-index: 2;
+  max-width: 880px;
+  padding: 130px 24px 90px;
+}
+.hero .insigna {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: rgba(128, 193, 254, 0.18);
+  border: 1px solid rgba(128, 193, 254, 0.3);
+  backdrop-filter: blur(10px);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--albastru-foarte-pal);
+  margin-bottom: 32px;
+}
+.hero h1 {
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+.hero h1 .evidentiat {
+  color: var(--albastru-foarte-pal);
+  position: relative;
+  display: inline-block;
+}
+.hero h1 .evidentiat svg {
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 12px;
+  color: var(--accent);
+}
+.hero p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgba(224, 227, 229, 0.92);
+  max-width: 640px;
+  margin: 0 auto 48px;
+}
+.hero-butoane {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+/* ---------- Butoane (pastilă) ---------- */
+.buton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--secundar);
+  color: #fff;
+  padding: 15px 32px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  box-shadow: 0 10px 25px rgba(9, 99, 154, 0.25);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.buton:hover { background: var(--accent); text-decoration: none; color: #fff; }
+.buton .material-symbols-outlined { font-size: 18px; transition: transform 0.3s; }
+.buton:hover .material-symbols-outlined { transform: translateX(4px); }
+
+.buton.secundar {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: none;
+}
+.buton.secundar:hover { background: rgba(255, 255, 255, 0.1); }
+
+/* ============================================================
+   Antet pagini interioare
+   ============================================================ */
+.antet-pagina {
+  background: linear-gradient(135deg, var(--primar), var(--secundar));
+  color: #fff;
+  padding: 160px 0 72px;
+}
+.antet-pagina h1 {
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.antet-pagina p { color: var(--albastru-foarte-pal); max-width: 640px; margin-top: 10px; font-size: 17px; }
+
+/* ============================================================
+   Secțiuni
+   ============================================================ */
+.sectiune { padding: 64px 0; }
+.sectiune.alternativ { background: var(--suprafata-joasa); }
+
+.titlu-sectiune {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 56px;
+}
+.titlu-sectiune h2 {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--primar);
+  margin-bottom: 14px;
+}
+.titlu-sectiune p { color: var(--text-secundar); }
+
+.eticheta {
+  display: inline-block;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+}
+
+/* ============================================================
+   Statistici — panou alb suprapus peste hero
+   ============================================================ */
+.panou-statistici {
+  position: relative;
+  z-index: 5;
+  margin: -56px auto 0;
+  max-width: var(--latime-max);
+  background: var(--suprafata);
+  border-radius: var(--raza-mare);
+  box-shadow: 0px 20px 40px rgba(13, 59, 92, 0.08);
+}
+.statistici {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  padding: 48px;
+  text-align: center;
+}
+.statistici .pictograma-stat {
+  color: var(--secundar);
+  margin-bottom: 8px;
+}
+.statistici .pictograma-stat .material-symbols-outlined {
+  font-size: 36px;
+  font-variation-settings: 'FILL' 1;
+}
+.statistici .numar {
+  font-size: clamp(34px, 4vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--primar);
+  line-height: 1.2;
+}
+.statistici .descriere {
+  color: var(--text-secundar);
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* ============================================================
+   Grile de carduri
+   ============================================================ */
+.grila { display: grid; gap: 24px; }
+.grila.col-3 { grid-template-columns: repeat(3, 1fr); }
+.grila.col-2 { grid-template-columns: repeat(2, 1fr); }
+.grila.col-4 { grid-template-columns: repeat(4, 1fr); }
+
+.card {
+  position: relative;
+  overflow: hidden;
+  background: var(--suprafata);
+  border: 1px solid var(--bordura);
+  border-radius: var(--raza);
+  padding: 32px;
+  box-shadow: var(--umbra);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--umbra-hover);
+}
+/* decor discret în colțul cardului */
+.card::before {
+  content: "";
+  position: absolute;
+  top: -32px;
+  right: -32px;
+  width: 128px;
+  height: 128px;
+  border-radius: 0 0 0 100%;
+  background: rgba(13, 59, 92, 0.06);
+  transition: transform 0.5s ease;
+}
+.card:hover::before { transform: scale(1.12); }
+.card > * { position: relative; z-index: 1; }
+
+.card h3 {
+  color: var(--primar);
+  margin-bottom: 12px;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.card p { color: var(--text-secundar); font-size: 15.5px; line-height: 1.6; }
+
+.card .pictograma {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--raza);
+  background: var(--primar-container);
+  color: var(--albastru-foarte-pal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.card .pictograma .material-symbols-outlined { font-size: 30px; }
+/* variante de culoare pentru pictograme */
+.card .pictograma.v2 { background: var(--albastru-pal); color: #004f7d; }
+.card .pictograma.v3 { background: #003d56; color: var(--accent); }
+
+/* chips / etichete mici */
+.chipuri { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.chip {
+  padding: 3px 10px;
+  background: var(--suprafata-container);
+  color: var(--text-secundar);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.link-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 18px;
+  color: var(--secundar);
+  transition: color 0.3s;
+}
+.link-card:hover { color: var(--primar); text-decoration: none; }
+.link-card .material-symbols-outlined { font-size: 16px; transition: transform 0.3s; }
+.link-card:hover .material-symbols-outlined { transform: translateX(4px); }
+
+/* ============================================================
+   Bloc text + imagine
+   ============================================================ */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+.split img {
+  border-radius: var(--raza-mare);
+  box-shadow: var(--umbra-hover);
+}
+.split h2 {
+  color: var(--primar);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 18px;
+}
+.split p { color: var(--text-secundar); margin-bottom: 14px; line-height: 1.6; }
+.split .buton { margin-top: 10px; }
+
+/* ---------- Liste cu bife ---------- */
+.lista-bife { list-style: none; }
+.lista-bife li {
+  padding-left: 32px;
+  position: relative;
+  margin-bottom: 12px;
+  color: var(--text-secundar);
+}
+.lista-bife li::before {
+  content: "check_circle";
+  font-family: "Material Symbols Outlined";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  color: var(--accent);
+  font-size: 20px;
+}
+
+/* ============================================================
+   Anunțuri
+   ============================================================ */
+.anunt {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  background: var(--suprafata);
+  border: 1px solid var(--bordura);
+  border-radius: var(--raza);
+  box-shadow: var(--umbra);
+  padding: 24px;
+  margin-bottom: 16px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.anunt:hover { transform: translateY(-4px); box-shadow: var(--umbra-hover); }
+.anunt .data {
+  flex-shrink: 0;
+  min-width: 64px;
+  height: 64px;
+  border-radius: var(--raza);
+  background: rgba(128, 193, 254, 0.18);
+  color: var(--primar);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  line-height: 1.1;
+  padding: 0 10px;
+}
+.anunt .data small { font-size: 11px; font-weight: 500; color: var(--secundar); letter-spacing: 0.05em; }
+.anunt h3 { font-size: 17px; font-weight: 600; color: var(--primar); margin-bottom: 4px; }
+.anunt p { font-size: 15px; color: var(--text-secundar); }
+
+/* ============================================================
+   Echipa managerială
+   ============================================================ */
+.persoana { text-align: center; }
+.persoana .avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--secundar), var(--accent));
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.persoana h3 { font-size: 17px; }
+.persoana p { font-size: 14px; }
+
+/* ============================================================
+   Galerie
+   ============================================================ */
+.galerie {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.galerie img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: var(--raza-mare);
+  box-shadow: var(--umbra);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.galerie img:hover { transform: scale(1.02) translateY(-4px); box-shadow: var(--umbra-hover); }
+
+/* ============================================================
+   Tabel (orar, documente)
+   ============================================================ */
+.tabel {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--suprafata);
+  border: 1px solid var(--bordura);
+  border-radius: var(--raza);
+  overflow: hidden;
+  box-shadow: var(--umbra);
+}
+.tabel th, .tabel td {
+  text-align: left;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--bordura);
+  font-size: 15px;
+}
+.tabel tr:last-child td { border-bottom: none; }
+.tabel th {
+  color: var(--primar);
+  background: var(--suprafata-joasa);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+/* ============================================================
+   Contact
+   ============================================================ */
+.info-contact { list-style: none; }
+.info-contact li {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 22px;
+  align-items: flex-start;
+}
+.info-contact .pictograma {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: var(--raza);
+  background: rgba(128, 193, 254, 0.18);
+  color: var(--secundar);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.info-contact strong { display: block; color: var(--primar); margin-bottom: 2px; }
+.info-contact > li > div:last-child { color: var(--text-secundar); }
+
+.harta iframe {
+  width: 100%;
+  height: 400px;
+  border: 0;
+  border-radius: var(--raza-mare);
+  background: var(--suprafata-joasa);
+  box-shadow: var(--umbra);
+}
+.harta .link-harta {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+/* ============================================================
+   Footer — deschis, aerisit
+   ============================================================ */
+.footer {
+  background: var(--suprafata-joasa);
+  color: var(--text-secundar);
+  padding: 72px 0 32px;
+  font-size: 15px;
+  margin-top: 32px;
+}
+.footer h4 {
+  color: var(--primar);
+  margin-bottom: 18px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.footer .brand {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primar);
+  margin-bottom: 14px;
+}
+.footer a { color: var(--text-secundar); transition: color 0.3s; }
+.footer a:hover { color: var(--primar); }
+.footer-grila {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+.footer ul { list-style: none; }
+.footer li { margin-bottom: 10px; }
+.footer-jos {
+  border-top: 1px solid var(--bordura);
+  padding-top: 24px;
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--text-secundar);
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (min-width: 768px) {
+  .sectiune { padding: 96px 0; }
+}
+
+@media (max-width: 980px) {
+  .grila.col-3, .grila.col-4 { grid-template-columns: repeat(2, 1fr); }
+  .statistici { grid-template-columns: repeat(2, 1fr); padding: 32px; }
+  .split { grid-template-columns: 1fr; gap: 36px; }
+  .footer-grila { grid-template-columns: 1fr; gap: 32px; }
+  .galerie { grid-template-columns: repeat(2, 1fr); }
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .nav-burger { display: block; }
+
+  /* meniul mobil — panou sub pastila de navigație */
+  .nav-links.deschis {
+    display: flex;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--bordura);
+    border-radius: 20px;
+    box-shadow: var(--umbra-hover);
+    padding: 16px 20px;
+  }
+  .nav-links.deschis a {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border-bottom: none;
+  }
+  .nav-links.deschis a.activ { background: var(--suprafata-joasa); }
+}
+
+@media (max-width: 640px) {
+  .grila.col-2, .grila.col-3, .grila.col-4 { grid-template-columns: 1fr; }
+  .galerie { grid-template-columns: 1fr; }
+  .statistici { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .hero { min-height: 88vh; }
+  .panou-statistici { margin: -40px 16px 0; }
+  .antet-pagina { padding: 130px 0 56px; }
+}

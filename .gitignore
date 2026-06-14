@@ -1,0 +1,7 @@
+# fișiere de sistem
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# config local de preview (nu e necesar pe GitHub)
+.claude/
