@@ -38,17 +38,6 @@ Schimbați o valoare acolo și se schimbă în tot site-ul.
 Efectele (animația de intrare din hero, contoarele de la statistici, apariția
 secțiunilor la scroll, micșorarea barei de navigație) sunt în `js/main.js`.
 
-## Ce mai e de făcut (TODO)
-
-- [ ] Înlocuiți link-urile `#` din `elevi.html` și `examene.html` cu PDF-urile reale
-  (descărcați-le de pe site-ul vechi și puneți-le într-un folder `assets/docs/`)
-- [ ] Cereți de la secretariat orarul actual și completați pagina Elevi
-- [ ] Faceți poze noi cu clădirea liceului — pozele actuale sunt vechi (2014-2015)
-  și nu există nicio poză bună cu exteriorul clădirii pentru hero
-- [ ] Verificați că datele de contact sunt actuale (telefon, e-mail)
-- [ ] Adăugați pagina GDPR / protecția datelor (textul există pe site-ul vechi)
-- [ ] Când e gata, publicați-l gratuit pe GitHub Pages, Netlify sau Vercel
-
 ## Observații
 
 - Antetul (bara de sus + meniul) și footer-ul sunt copiate identic în fiecare pagină.
